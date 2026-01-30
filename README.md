@@ -654,7 +654,7 @@ This project is licensed under the MIT License - see the [LICENSE](./arlog-deskt
 Senior DevOps Engineer & Backend Solutions Developer
 
 - **Expertise**: Kubernetes, Cloud Infrastructure, CI/CD, Python, Go, TypeScript
-- **Email**: batuhan.ozoguz@beko.com
+- **Email**: batu@bozoguz.cloud
 
 ### Skills Demonstrated
 
