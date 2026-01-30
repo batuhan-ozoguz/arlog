@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: arlog-postgres
+    environment:
+      POSTGRES_USER: arlog
+      POSTGRES_PASSWORD: arlog_password
+      POSTGRES_DB: arlog_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U arlog"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - arlog-network
+
+  # Backend (Go)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: arlog-backend
+    environment:
+      PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: arlog
+      DB_PASSWORD: arlog_password
+      DB_NAME: arlog_db
+      DB_SSLMODE: disable
+      ENVIRONMENT: development
+      OKTA_DOMAIN: ${OKTA_DOMAIN}
+      OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
+      OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
+      OKTA_REDIRECT_URI: http://localhost:8080/auth/okta/callback
+      JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-in-production}
+      FRONTEND_URL: http://localhost:5173
+      AUTH_MODE: ${AUTH_MODE:-dev}
+      KUBE_PROXY_URL: ${KUBE_PROXY_URL:-http://host.docker.internal:8001}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - arlog-network
+    # For accessing host's kubectl proxy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Frontend (React - Original Vite)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: arlog-frontend-vite
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - arlog-network
+    environment:
+      VITE_API_URL: http://localhost:8080
+
+  # Frontend (Next.js - v0 Dashboard)
+  dashboard:
+    build:
+      context: ./frontend/arlog-dashboard
+      dockerfile: Dockerfile
+    container_name: arlog-dashboard
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - arlog-network
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:8080
+      NEXT_PUBLIC_ENVIRONMENT: development
+      NEXT_PUBLIC_AUTH_MODE: dev
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  arlog-network:
+    driver: bridge
+

@@ -1,0 +1,85 @@
+# ArLOG Desktop - Azure Pipeline
+# Automatically builds Windows installer (.exe) on every commit
+
+name: ArLOG-Desktop-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  branches:
+    include:
+      - main
+      - v1.1-production-build
+
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  nodeVersion: '18.x'
+  packageVersion: '1.1.$(Build.BuildId)'
+
+stages:
+  - stage: Build
+    displayName: 'Build Windows Installer'
+    jobs:
+      - job: BuildWindows
+        displayName: 'Build ArLOG for Windows'
+        steps:
+          - checkout: self
+            displayName: 'Checkout repository'
+
+          - task: NodeTool@0
+            displayName: 'Install Node.js $(nodeVersion)'
+            inputs:
+              versionSpec: $(nodeVersion)
+
+          - script: |
+              npm install -g pnpm
+              pnpm --version
+            displayName: 'Install pnpm package manager'
+
+          - script: pnpm install
+            displayName: 'Install dependencies'
+
+          - script: pnpm run build
+            displayName: 'Build Electron application'
+
+          - script: pnpm run build:win:quick
+            displayName: 'Create Windows installer'
+
+          - task: CopyFiles@2
+            displayName: 'Copy installer to staging'
+            inputs:
+              SourceFolder: 'dist'
+              Contents: '**/*.exe'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Windows installer'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'ArLOG-Windows-Installer'
+              publishLocation: 'Container'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish all build artifacts'
+            inputs:
+              PathtoPublish: 'dist'
+              ArtifactName: 'ArLOG-Windows-Full'
+              publishLocation: 'Container'
+
+          - task: UniversalPackages@0
+            displayName: 'Publish to Azure Artifacts Feed'
+            inputs:
+              command: 'publish'
+              publishDirectory: '$(Build.ArtifactStagingDirectory)'
+              feedsToUsePublish: 'internal'
+              vstsFeedPublish: 'ArLog'
+              vstsFeedPackagePublish: 'arlog-desktop'
+              versionOption: 'custom'
+              versionPublish: '$(packageVersion)'
+              packagePublishDescription: 'ArLOG Desktop Windows Installer - Build $(Build.BuildNumber)'
+

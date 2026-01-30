@@ -1,0 +1,109 @@
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.cursor/
+.cursorignore
+.cursorrules
+
+# Logs
+*.log
+logs/
+
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+out/
+*.out
+
+# Temporary files
+tmp/
+temp/
+
+# Database
+*.db
+*.sqlite
+
+# Go
+go.work
+
+# Package lock files (keep only package.json)
+package-lock.json
+
+# Internal planning and notes (not relevant for public repo)
+GITHUB_PUSH.md
+*_PLAN.md
+*_SETUP.md
+*_DEBUG.md
+*_COMPLETE.md
+*_SUMMARY.md
+*_STRUCTURE.md
+*_OVERVIEW.md
+*_STATUS.md
+*_INTEGRATION.md
+*_FEATURE.md
+*_INSTRUCTIONS.md
+*_GUIDE.md
+*_FIX.md
+*_COZUM.md
+*_ERROR_FIX.md
+START_HERE.md
+GET_STARTED.md
+QUICK_START.md
+QUICKSTART.md
+FINAL_SUMMARY.md
+SPLIT_COMPLETE.md
+CREATE_ELECTRON_APP.md
+AUTHENTICATION.md
+
+# Desktop app internal docs
+arlog-desktop/AZURE_PIPELINES_SETUP.md
+arlog-desktop/AZURE_PUSH.md
+arlog-desktop/BUILD_PRODUCTION.md
+arlog-desktop/BUILD_WINDOWS_INSTALLER.md
+arlog-desktop/GIT_PUSH_GUIDE.md
+arlog-desktop/ICON_QUICKSTART.md
+arlog-desktop/ICON_SETUP.md
+arlog-desktop/INSTALL_WINDOWS.md
+arlog-desktop/LOG_STREAMING_DEBUG.md
+arlog-desktop/PUSH_INSTRUCTIONS.md
+arlog-desktop/QUICK_START.md
+arlog-desktop/RELEASE_STRATEGY.md
+arlog-desktop/START_HERE.md
+arlog-desktop/V1.1_PLAN.md
+arlog-desktop/WINDOWS_BUILD_INSTRUCTIONS.txt
+arlog-desktop/WINDOWS_BUILD.md
+arlog-desktop/WINDOWS_KESIN_COZUM.md
+arlog-desktop/WINDOWS_NPM_ERROR_FIX.md
+arlog-desktop/WINDOWS_QUICK_FIX.md
+
+# Web app internal docs
+arlog-web/QUICK START.md
+
+# Legacy frontend (duplicate, not needed)
+frontend/
+
+# Docs internal guides (AI prompts etc)
+docs/UI_GUIDES/AI_PROMPTS.md
+docs/UI_GUIDES/MINIMAL_DESIGN_PROMPTS.md
+docs/UI_GUIDES/QUICK_UI_PROMPT.md
+docs/UI_GUIDES/V0_INTEGRATION_GUIDE.md

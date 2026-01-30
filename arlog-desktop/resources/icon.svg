@@ -1,0 +1,52 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background - Blue gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0070f3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0761d1;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded square background -->
+  <rect width="1024" height="1024" fill="url(#bgGradient)" rx="220"/>
+  
+  <!-- Terminal window -->
+  <g transform="translate(162, 162)">
+    <!-- Terminal background -->
+    <rect x="0" y="0" width="700" height="700" rx="50" fill="white" opacity="0.95"/>
+    
+    <!-- Terminal header -->
+    <rect x="0" y="0" width="700" height="70" rx="50" fill="#f5f5f5"/>
+    
+    <!-- Terminal dots -->
+    <circle cx="50" cy="35" r="10" fill="#ff5f56"/>
+    <circle cx="90" cy="35" r="10" fill="#ffbd2e"/>
+    <circle cx="130" cy="35" r="10" fill="#27c93f"/>
+    
+    <!-- Title text -->
+    <text x="350" y="45" font-family="system-ui, -apple-system" font-size="24" font-weight="600" fill="#666" text-anchor="middle">ArLOG</text>
+    
+    <!-- Log lines (scrolling effect) -->
+    <g opacity="0.9">
+      <rect x="50" y="130" width="500" height="14" rx="7" fill="#0070f3" opacity="0.9"/>
+      <rect x="50" y="200" width="580" height="14" rx="7" fill="#0070f3" opacity="0.7"/>
+      <rect x="50" y="270" width="420" height="14" rx="7" fill="#0070f3" opacity="0.9"/>
+      <rect x="50" y="340" width="540" height="14" rx="7" fill="#0070f3" opacity="0.7"/>
+      <rect x="50" y="410" width="480" height="14" rx="7" fill="#0070f3" opacity="0.9"/>
+      <rect x="50" y="480" width="440" height="14" rx="7" fill="#0070f3" opacity="0.7"/>
+      <rect x="50" y="550" width="510" height="14" rx="7" fill="#0070f3" opacity="0.9"/>
+      <rect x="50" y="620" width="400" height="14" rx="7" fill="#0070f3" opacity="0.7"/>
+    </g>
+    
+    <!-- Kubernetes-style decoration -->
+    <g transform="translate(600, 620)" opacity="0.6">
+      <!-- Small K8s-inspired hexagon -->
+      <polygon points="0,-25 21.65,-12.5 21.65,12.5 0,25 -21.65,12.5 -21.65,-12.5" 
+               fill="none" stroke="#0070f3" stroke-width="4"/>
+      <circle cx="0" cy="0" r="8" fill="#0070f3"/>
+    </g>
+  </g>
+</svg>
+
+
+
